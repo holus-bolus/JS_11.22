@@ -1,3 +1,5 @@
+/*I tried to figure the task out, but I couldn't, so I decided to pass the HW without it. I'll think on it more and try to pass the Homework later.*/
+
 let iterationStorage = '';
 
 function askFirstNumber() {
