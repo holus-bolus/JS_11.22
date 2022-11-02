@@ -1,3 +1,6 @@
+
+
+
 function consoleCube() {
     let symbolsStorage = '';
     const ASK_SYMBOLS = prompt('Enter any symbols, no more than 3 symbols');
