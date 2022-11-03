@@ -16,23 +16,22 @@ function warmOrCold() {
     }
     secondNumber += ASK_SECOND_NUMBER;
     let randomNumber = Math.floor(firstNumber - 0.5 + Math.random() * (secondNumber - firstNumber + 1));
-    console.log(randomNumber);
     while (true) {
         let GUESS_THE_NUMBER = +prompt('Try to guess the number that has been guessed by the program');
         numbersStorage = +GUESS_THE_NUMBER;
         if ((GUESS_THE_NUMBER < randomNumber || GUESS_THE_NUMBER < numbersStorage) || (GUESS_THE_NUMBER > randomNumber || GUESS_THE_NUMBER > numbersStorage)) {
             alert('Cold');
             amountOfTries += 1;
-        } else if ((GUESS_THE_NUMBER < randomNumber && GUESS_THE_NUMBER < numbersStorage) || (GUESS_THE_NUMBER > randomNumber && GUESS_THE_NUMBER > numbersStorage)) {
+        } else if ((GUESS_THE_NUMBER < randomNumber || GUESS_THE_NUMBER < numbersStorage) || (GUESS_THE_NUMBER > randomNumber || GUESS_THE_NUMBER > numbersStorage)) {
             alert('Colder');
             amountOfTries += 1;
         } else if ((GUESS_THE_NUMBER + 10 === randomNumber) || (GUESS_THE_NUMBER - 10 === randomNumber)) {
             alert('Warm!');
             amountOfTries += 1;
-        } else if ((GUESS_THE_NUMBER + 5 === randomNumber && GUESS_THE_NUMBER < numbersStorage) || (GUESS_THE_NUMBER - 5 === randomNumber && GUESS_THE_NUMBER < numbersStorage)) {
+        } else if ((GUESS_THE_NUMBER + 5 === randomNumber || GUESS_THE_NUMBER < numbersStorage) || (GUESS_THE_NUMBER - 5 === randomNumber || GUESS_THE_NUMBER < numbersStorage)) {
             alert('Warmer!');
             amountOfTries += 1;
-        } else if ((GUESS_THE_NUMBER + 3 === randomNumber && GUESS_THE_NUMBER < numbersStorage) || (GUESS_THE_NUMBER - 3 === randomNumber && GUESS_THE_NUMBER < numbersStorage)) {
+        } else if ((GUESS_THE_NUMBER + 3 === randomNumber || GUESS_THE_NUMBER < numbersStorage) || (GUESS_THE_NUMBER - 3 === randomNumber || GUESS_THE_NUMBER < numbersStorage)) {
             alert('You’re almost there');
             amountOfTries += 1;
         } else if (GUESS_THE_NUMBER === randomNumber) {
