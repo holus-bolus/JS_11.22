@@ -23,10 +23,10 @@ function warmOrCold() {
         if ((GUESS_THE_NUMBER < randomNumber || GUESS_THE_NUMBER < numbersStorage) || (GUESS_THE_NUMBER > randomNumber || GUESS_THE_NUMBER > numbersStorage) && amountOfTries === 1) {
             alert('Cold');
             amountOfTries += 1;
-        } else if ((GUESS_THE_NUMBER < randomNumber || GUESS_THE_NUMBER < numbersStorage) || (GUESS_THE_NUMBER > randomNumber || GUESS_THE_NUMBER > numbersStorage)&& amountOfTries !== 1) {
+        } else if ((GUESS_THE_NUMBER < randomNumber || GUESS_THE_NUMBER < numbersStorage) || (GUESS_THE_NUMBER > randomNumber || GUESS_THE_NUMBER > numbersStorage) && amountOfTries !== 1) {
             alert('Colder');
             amountOfTries += 1;
-        } else if(GUESS_THE_NUMBER!==randomNumber) {
+        } else if ((GUESS_THE_NUMBER !== randomNumber && GUESS_THE_NUMBER < numbersStorage) || (GUESS_THE_NUMBER !== randomNumber && GUESS_THE_NUMBER > numbersStorage) && amountOfTries !== 1) {
             alert('Cold');
             amountOfTries += 1;
         } else if ((GUESS_THE_NUMBER + 10 === randomNumber) || (GUESS_THE_NUMBER - 10 === randomNumber)) {
