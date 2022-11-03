@@ -1,47 +1,45 @@
-/*I tried to figure the task out, but I couldn't, so I decided to pass the HW without it. I'll think on it more and try to pass the Homework later.*/
-
-let iterationStorage = '';
-
-function askFirstNumber() {
-    let firstNumberStorage = parseInt('');
-    let secondNumberStorage = parseInt('');
+function warmOrCold() {
+    let firstNumber = 0;
+    let secondNumber = 0;
+    let amountOfTries = 1;
+    let numbersStorage = 0;
+    let ASK_FIRST_NUMBER = prompt('Enter a first positive number');
+    while (ASK_FIRST_NUMBER < 0) {
+        alert('Please enter only positive numbers');
+        ASK_FIRST_NUMBER = prompt('Enter a first positive number');
+    }
+    firstNumber += +ASK_FIRST_NUMBER;
+    const ASK_SECOND_NUMBER = prompt(`Enter a second positive number greater than ${parseInt(ASK_FIRST_NUMBER) + 100}`);
+    if (+ASK_SECOND_NUMBER < +(parseInt(ASK_FIRST_NUMBER) + 100)) {
+        alert(`Please enter a number greater than ${parseInt(ASK_FIRST_NUMBER) + 100}`);
+        const ASK_SECOND_NUMBER = prompt(`Enter a second positive number greater than ${parseInt(ASK_FIRST_NUMBER) + 100}`)
+    }
+    secondNumber += ASK_SECOND_NUMBER;
+    let randomNumber = Math.floor(firstNumber - 0.5 + Math.random() * (secondNumber - firstNumber + 1));
+    console.log(randomNumber);
     while (true) {
-        const ASK_FIRST_NUMBER = prompt("Enter a first number");
-        firstNumberStorage += ASK_FIRST_NUMBER;
-        if (ASK_FIRST_NUMBER < 0) {
-            alert("Please enter only positive numbers");
-            continue;
-        } else if (isNaN(+ASK_FIRST_NUMBER)) {
-            alert("Please enter a number");
-            continue;
-        }
-        const ASK_SECOND_NUMBER = prompt("Enter a second number that bigger than first number for 100 points(`${+firstNumberStorage+100}`)");
-        secondNumberStorage += ASK_SECOND_NUMBER;
-        if (+ASK_SECOND_NUMBER < 0) {
-            alert("Please enter only positive numbers");
-        } else if (isNaN(+ASK_SECOND_NUMBER)) {
-            alert("Please enter a number");
-            continue;
-        } else if ((+ASK_SECOND_NUMBER + 100) < firstNumberStorage) {
-            alert(`Please enter a number greater than ${firstNumberStorage + 100}`)
-        }
-        let randomNumber = firstNumberStorage - 0.5 + Math.random() * (secondNumberStorage - firstNumberStorage + 1);
-        let guessesStorage = parseInt('');
-        const USER_GUESS = prompt("Enter a number and try to guess what number was conceived by the program");
-        if (+USER_GUESS === randomNumber) {
-            alert("Great! It'\s like you knew the number")
-        } else if (+USER_GUESS < randomNumber) {
-            alert("Cold");
-            guessesStorage += 1;
-            continue;
-        } else if (+USER_GUESS - 1 < randomNumber) {
-            alert("Colder");
-            guessesStorage += 1;
-            continue;
-        } else {
-
+        let GUESS_THE_NUMBER = +prompt('Try to guess the number that has been guessed by the program');
+        numbersStorage = +GUESS_THE_NUMBER;
+        if ((GUESS_THE_NUMBER < randomNumber || GUESS_THE_NUMBER < numbersStorage) || (GUESS_THE_NUMBER > randomNumber || GUESS_THE_NUMBER > numbersStorage)) {
+            alert('Cold');
+            amountOfTries += 1;
+        } else if ((GUESS_THE_NUMBER < randomNumber && GUESS_THE_NUMBER < numbersStorage) || (GUESS_THE_NUMBER > randomNumber && GUESS_THE_NUMBER > numbersStorage)) {
+            alert('Colder');
+            amountOfTries += 1;
+        } else if ((GUESS_THE_NUMBER + 10 === randomNumber) || (GUESS_THE_NUMBER - 10 === randomNumber)) {
+            alert('Warm!');
+            amountOfTries += 1;
+        } else if ((GUESS_THE_NUMBER + 5 === randomNumber && GUESS_THE_NUMBER < numbersStorage) || (GUESS_THE_NUMBER - 5 === randomNumber && GUESS_THE_NUMBER < numbersStorage)) {
+            alert('Warmer!');
+            amountOfTries += 1;
+        } else if ((GUESS_THE_NUMBER + 3 === randomNumber && GUESS_THE_NUMBER < numbersStorage) || (GUESS_THE_NUMBER - 3 === randomNumber && GUESS_THE_NUMBER < numbersStorage)) {
+            alert('You’re almost there');
+            amountOfTries += 1;
+        } else if (GUESS_THE_NUMBER === randomNumber) {
+            alert(`“You did it in ${amountOfTries} attempts. Congratulations!”`);
+            break;
         }
     }
 }
 
-askFirstNumber();
+warmOrCold();
