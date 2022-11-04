@@ -26,6 +26,3 @@ for (let item of iterable) {
     console.log(item); // 1, 2, 3, 4
 }
 
-const anotherIterable = (createIterable('aaa', 4))
-
-console.log(anotherIterable);
