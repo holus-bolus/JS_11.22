@@ -11,8 +11,8 @@ function selectFromInterval(array, firstNumber, secondNumber) {
     }
     for (let iterator = 0; iterator < array.length; iterator++) {
         if (array[iterator] >= firstNumber && array[iterator] <= secondNumber) {
-           ARRAY_OF_VALUES.push(array[iterator]);
+            ARRAY_OF_VALUES.push(array[iterator]);
         }
     }
-    return ARRAY_OF_VALUES;
+    return ARRAY_OF_VALUES
 }
