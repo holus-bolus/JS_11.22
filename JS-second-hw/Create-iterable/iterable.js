@@ -21,8 +21,4 @@ function createIterable(start, end) {
     return range;
 }
 
-const iterable = createIterable(1, 4)
-for (let item of iterable) {
-    console.log(item); // 1, 2, 3, 4
-}
 
