@@ -1,28 +1,44 @@
-fetch('https://rickandmortyapi.com/api/character')
-  .then((response) => response.json())
-  .then((data) => logData(data.results));
+const HOST = 'https://rickandmortyapi.com/api/';
 
-function logData(characters, name, episode) {
-  characters.forEach((character) => {
-    console.log(character.name, character.episode);
+function request(url) {
+  return new Promise((resolve, reject) => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => resolve(data))
+      .catch((error) => {
+        reject(error);
+      });
   });
 }
 
 class RickAndMorty {
-  async getCharacter(character, id) {
-    if (isFinite(id) || isFinite(character)) {
+  getCharacter(characterId) {
+    if (!isFinite(characterId)) {
       throw new Error();
     }
-    if (!id || !character) {
-      return null;
-    }
-    return character.id === id;
+    return new Promise((resolve, reject) => {
+      request(`${HOST}character/${characterId}`)
+        .then((character) => {
+          if (character.error) {
+            resolve(null);
+          } else {
+            resolve(character);
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
   }
 
-  async getEpisode(episodeId, character) {
-    if (isFinite(episodeId)) {
+  async getEpisode(episodeId) {
+    if (!isFinite(episodeId)) {
       throw new Error();
     }
-    character.episode.filter((item) => item.episode);
+    const episode = await request(`${HOST}episode/${episodeId}`);
+    if (episode.error) {
+      return null;
+    }
+    return episode;
   }
 }
