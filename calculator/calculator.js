@@ -1,51 +1,52 @@
 class Calculator {
   constructor(firstNumber, secondNumber) {
     if (
-      !firstNumber ||
-      !secondNumber ||
-      typeof firstNumber !== 'number' ||
-      typeof secondNumber !== 'number' ||
-      isNaN(firstNumber) ||
-      isNaN(secondNumber) ||
-      isFinite(firstNumber) ||
-      isFinite(secondNumber)
+      !this.checkIfNumberIsCorrect(firstNumber) ||
+      !this.checkIfNumberIsCorrect(secondNumber)
     ) {
-      throw new Error('Invalid number');
+      throw new Error();
     }
     this.firstNumber = firstNumber;
     this.secondNumber = secondNumber;
+    this.getSum = this.getSum.bind(this);
+    this.getMul = this.getMul.bind(this);
+    this.getSub = this.getSub.bind(this);
+    this.getDiv = this.getDiv.bind(this);
   }
 
-  setX = (number) => {
-    if (!number || typeof number !== 'number') {
-      throw new Error('Invalid number');
+  checkIfNumberIsCorrect(number) {
+    return typeof number === 'number' && isFinite(number);
+  }
+
+  setX(number) {
+    if (!this.checkIfNumberIsCorrect(number)) {
+      throw new Error('Please enter a number');
     }
     this.firstNumber = number;
-  };
+    this.firstNumber.bind(number);
+  }
 
-  setY = (number) => {
-    if (!number || typeof number !== 'number') {
-      throw new Error('Invalid number');
+  setY(number) {
+    if (!this.checkIfNumberIsCorrect(number)) {
+      throw new Error('Please enter a number');
     }
     this.secondNumber = number;
-  };
+    this.secondNumber.bind(number);
+  }
 
-  getSum = () => {
-    console.log(this.firstNumber + this.secondNumber);
-  };
+  getSum() {
+    return this.firstNumber + this.secondNumber;
+  }
 
-  getMul = () => {
-    console.log(this.firstNumber * this.secondNumber);
-  };
+  getMul() {
+    return this.firstNumber * this.secondNumber;
+  }
 
-  getSub = () => {
-    console.log(this.firstNumber - this.secondNumber);
-  };
+  getSub() {
+    return this.firstNumber - this.secondNumber;
+  }
 
-  getDiv = () => {
-    if (this.secondNumber === 0) {
-      throw new Error("You can't divide on zero");
-    }
-    console.log(this.firstNumber / this.secondNumber);
-  };
+  getDiv() {
+    return this.firstNumber / this.secondNumber;
+  }
 }
