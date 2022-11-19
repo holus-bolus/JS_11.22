@@ -1,13 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Calculator</title>
 </head>
 <body>
-
+<div class="container">
+  <div class="calculator">
+    <div class="value">
+      <form name='form'>
+        <label><input type="text" name="textview" readonly class="input"></label>
+      </form>
+    </div>
+    <div class="buttons-container">
+      <button onclick='clearInput()' class="button clear operator">C</button>
+      <button onclick='reverseANumber()' class="button operator plus-minus">±</button>
+      <button onclick='deleteANumber()' class="button operator  delete">Del</button>
+      <button onclick='insert("/")' class="button operator division">÷</button>
+      <button onclick='insert("7")' class="button number-7">7</button>
+      <button onclick='insert("8")' class="button number-8">8</button>
+      <button onclick='insert("9")' class="button number-9">9</button>
+      <button onclick='insert("*")' class="button operator multiplication">×</button>
+      <button onclick='insert("4")' class="button number-4">4</button>
+      <button onclick='insert("5")' class="button number-5">5</button>
+      <button onclick='insert("6")' class="button number-6">6</button>
+      <button onclick='insert("-")' class="button operator subtraction">−</button>
+      <button onclick='insert("1")' class="button number-1">1</button>
+      <button onclick='insert("2")' class="button number-2">2</button>
+      <button onclick='insert("3")' class="button number-3">3</button>
+      <button onclick='insert("+")' class="button operator addition">+</button>
+      <button onclick='insert("0")' class="button number-0">0</button>
+      <button onclick='insert("00")' class="button number-00">00</button>
+      <button onclick='insert(".")' class="button decimal">.</button>
+      <button onclick='calculateAResult()' class="button operator equal">=</button>
+      <button onclick='insert("(")' class='button operator'>(</button>
+      <button onclick='insert(")")' class='button operator'>)</button>
+    </div>
+  </div>
+</div>
+<script src="script.js"></script>
 </body>
 </html>
