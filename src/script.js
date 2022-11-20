@@ -60,8 +60,10 @@ function keyboardInputHandler(e) {
     res.value += '*';
   } else if (e.key === '/') {
     res.value += '/';
-  } else if (e.key === '%') {
-    res.value += '%';
+  } else if (e.key === '(') {
+    res.value += '(';
+  } else if (e.key === ')') {
+    res.value += ')';
   }
 
   if (e.key === '.') {
