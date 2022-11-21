@@ -1,35 +1,54 @@
-function insert(num) {
-  document.form.textview.value = document.form.textview.value + num;
-  if (document.form.textview.value === 0 && num === 0) {
-    document.form.textview.value = '';
+let screen = document.querySelector('#screen');
+let btn = document.querySelectorAll('.btn');
+
+for (let item of btn) {
+  item.addEventListener('click', (e) => {
+    let btnText = e.target.innerText;
+    screen.value += btnText;
+  });
+}
+function sin() {
+  screen.value = Math.sin(screen.value);
+}
+function cos() {
+  screen.value = Math.cos(screen.value);
+}
+function tan() {
+  screen.value = Math.tan(screen.value);
+}
+function log() {
+  screen.value = Math.log(screen.value);
+}
+function e() {
+  screen.value = Math.E;
+}
+function pi() {
+  screen.value = Math.PI;
+}
+function pow() {
+  screen.value = Math.pow(screen.value, 2);
+}
+function sqrt() {
+  screen.value = Math.sqrt(screen.value);
+}
+function fact() {
+  let i, num, f;
+  f = 1;
+  num = screen.value;
+  for (i = 1; i < num; i++) {
+    f *= i;
   }
+  i -= 1;
+  screen.value = f;
 }
-
-function clearInput() {
-  document.form.textview.value = '';
-}
-
-function deleteANumber() {
-  let expression = document.form.textview.value;
-  document.form.textview.value = expression.substring(0, expression.length - 1);
-}
-
-function calculateAResult() {
-  let expression = document.form.textview.value;
-  if (expression) {
-    document.form.textview.value = eval(expression);
-  }
-}
-
-function reverseANumber() {
-  let expression = document.form.textview.value;
-  document.form.textview.value = parseInt(expression) * -1;
+function backspc() {
+  screen.value = screen.value.substr(0, screen.value.length - 1);
 }
 
 document.addEventListener('keydown', keyboardInputHandler);
 
 function keyboardInputHandler(e) {
-  let res = document.querySelector('.input');
+  let res = document.querySelector('#screen');
   if (e.key === '0') {
     res.value += '0';
   } else if (e.key === '1') {
