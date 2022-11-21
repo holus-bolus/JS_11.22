@@ -8,28 +8,28 @@ for (let item of btn) {
   });
 }
 function sin() {
-  screen.value = Math.sin(screen.value);
+  screen.value = Math.sin(screen.value).toFixed(8);
 }
 function cos() {
-  screen.value = Math.cos(screen.value);
+  screen.value = Math.cos(screen.value).toFixed(8);
 }
 function tan() {
-  screen.value = Math.tan(screen.value);
+  screen.value = Math.tan(screen.value).toFixed(8);
 }
 function log() {
-  screen.value = Math.log(screen.value);
+  screen.value = Math.log(screen.value).toFixed(8);
 }
 function e() {
-  screen.value = Math.E;
+  screen.value = Math.E.toFixed(8);
 }
 function pi() {
-  screen.value = Math.PI;
+  screen.value = Math.PI.toFixed(8);
 }
 function pow() {
-  screen.value = Math.pow(screen.value, 2);
+  screen.value = Math.pow(screen.value, 2).toFixed(8);
 }
 function sqrt() {
-  screen.value = Math.sqrt(screen.value);
+  screen.value = Math.sqrt(screen.value).toFixed(8);
 }
 function fact() {
   let i, num, f;
@@ -70,7 +70,6 @@ function keyboardInputHandler(e) {
   } else if (e.key === '9') {
     res.value += '9';
   }
-
   if (e.key === '+') {
     res.value += '+';
   } else if (e.key === '-') {
@@ -84,14 +83,12 @@ function keyboardInputHandler(e) {
   } else if (e.key === ')') {
     res.value += ')';
   }
-
   if (e.key === '.') {
     res.value += '.';
   }
   if (e.key === 'Enter') {
     res.value = eval(res.value || null);
   }
-
   if (e.key === 'Backspace') {
     let resultInput = res.value;
     res.value = resultInput.substring(0, res.value.length - 1);
