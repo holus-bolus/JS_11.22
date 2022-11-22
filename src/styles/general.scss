@@ -1,77 +1,62 @@
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 90vh;
+html {
+  font-family: "Montserrat", sans-serif;
 }
-
+section {
+  background-color: rgb(18, 26, 31);
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .container {
-  padding: 20px;
+  width: 90%;
+  max-width: 350px;
+  background-color: rgb(39, 55, 59);
   border-radius: 8px;
-  box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #ffffff;
+  overflow: hidden;
+}
+.display {
+  background-color: rgb(182, 182, 182);
+  height: 100px;
+  width: 100%;
+  text-align: right;
+  padding: 20px;
+  font-size: 30px;
+  position: relative;
+}
+.display-1 {
+  opacity: 0.4;
+  font-size: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+.temp-result {
+  position: absolute;
+  bottom: 0;
+  left: 10;
+  font-size: 20px;
+  opacity: 0.3;
+}
+.all_button {
+  color: whitesmoke;
+  display: grid;
+  grid-template: repeat(4, 1fr) / repeat(4, 1fr);
+}
+.button {
+  border: 0.5px solid rgba(92, 92, 92, 0.137);
+  height: 100px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  background-color: gold;
-  @include media-mobile {
-    width: 350px;
-  }
+  font-size: 30px;
+  cursor: pointer;
 }
-button {
-  width: 60px;
-  height: 30px;
-  font-size: 16px;
-  border: none;
-  outline: none;
-  margin: 4px;
-  border-radius: 4px;
-  transition: 0.2s;
-  box-shadow: 5px 5px 8px #00000020, -5px -5px 8px #ffff;
-  background-color: darkseagreen;
+.button:hover {
+  background-color: rgb(30, 43, 46);
+  color: white;
 }
-button:hover {
-  box-shadow: inset 5px 5px 8px rgba(16, 16, 16, 0.1), inset -5px -5px 8px #fff;
-}
-
-#screen {
-  margin-bottom: 0.5em;
-  width: 410px;
-  height: 40px;
-  outline: none;
-  border: none;
-  text-align: right;
-  font-size: 35px;
-  background: orange;
-  border-radius: 6px;
-  padding-right: 0.5em;
-  box-shadow: inset 8px 8px 8px #cbced1, 8px 8px 8px #d2d1d1;
-  @include media-mobile{
-    width: 90%;
-  }
-}
-#eval {
-  background: #33ccff;
-  color: #fff;
-  box-shadow: inset 5px 5px 8px #66d9ff, inset -5px -5px 8px #00ace6;
-}
-#eval:hover {
-  box-shadow: inset 5px 5px 8px #00ace6, inset -5px -5px 8px #00ace6;
-}
-#ac {
-  background-color: #33cc33;
-  color: #fff;
-}
-#ac:hover {
-  box-shadow: inset 5px 5px 8px #2eb82e, inset -5px -5px 8px #33cc33;
-}
-#ce {
-  background-color: #33ccff;
-  color: #fff;
-}
-#ce:hover {
-  box-shadow: inset 5px 5px 8px #33ccff, inset -5px -5px 8px #33ccff;
-}
-#screen::placeholder {
-  opacity: 0.7;
+.btn-0 {
+  grid-column: 1/3;
 }
