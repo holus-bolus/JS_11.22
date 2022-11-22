@@ -1,62 +1,173 @@
-html {
-  font-family: "Montserrat", sans-serif;
+* {
+  border: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-section {
-  background-color: rgb(18, 26, 31);
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+:root {
+  --bg: #c7cad1;
+  --fg: #17181c;
+  --calcBg: #F97100;
+  --logoBlue: #255ff4;
+  --transDur: 0.05s;
+  --buttonTiming: linear;
+  font-size: calc(20px + (30 - 20) * (100vw - 320px) / (1280 - 320));
 }
-.container {
-  width: 90%;
-  max-width: 350px;
-  background-color: rgb(39, 55, 59);
-  border-radius: 8px;
-  overflow: hidden;
+
+body, button, input {
+  color: var(--fg);
+  font: 1em/1.5 "Hind", sans-serif;
 }
-.display {
-  background-color: rgb(182, 182, 182);
-  height: 100px;
-  width: 100%;
-  text-align: right;
-  padding: 20px;
-  font-size: 30px;
-  position: relative;
-}
-.display-1 {
-  opacity: 0.4;
-  font-size: 20px;
-  height: 20px;
-  overflow: hidden;
-}
-.temp-result {
-  position: absolute;
-  bottom: 0;
-  left: 10;
-  font-size: 20px;
-  opacity: 0.3;
-}
-.all_button {
-  color: whitesmoke;
+
+body {
+  background-color: var(--bg);
   display: grid;
-  grid-template: repeat(4, 1fr) / repeat(4, 1fr);
+  padding: 1.5em 0;
+  place-items: center;
+  height: 100vh;
 }
-.button {
-  border: 0.5px solid rgba(92, 92, 92, 0.137);
-  height: 100px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 30px;
+
+.calc {
+  background-color: var(--calcBg);
+  background-image: linear-gradient(180deg, #0000, #0001),
+  radial-gradient(0.25em 0.25em at 0.5em 0.25em, #fff7 25%, #fff0 50%),
+  radial-gradient(95% 0.25em at 50% 0.25em, #fff7 25%, #fff0 50%);
+  border-radius: 0.75em;
+  box-shadow: 0 0.5em 0.5em #fff4 inset,
+  0 -0.125em 0.25em 0.125em #0007 inset,
+  0 0.25em 0.75em #0007;
+  padding: 0.25em 1em;
+  position: relative;
+  width: 12em;
+  height: 19.5em;
+}
+
+.calc__btns {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 1.5em);
+  grid-gap: 0.5em 0.75em;
+}
+
+.calc__btn:focus, .calc__btn span:focus, .calc__screen:focus {
+  outline: transparent;
+}
+
+.calc__btn, .calc__screen {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.calc__btn, .calc__btn.calc__btn--primary, .calc__btn.calc__btn--secondary {
+  color: #fff;
+}
+
+.calc__btn {
+  background-color: #2e3138;
+  background-image: linear-gradient(180deg, #0000, #0002),
+  radial-gradient(90% 0.125em at 50% 0.125em, #fff7 25%, #fff0 50%);
+  border: 0;
+  border-radius: 0.25em;
   cursor: pointer;
+  text-shadow: 0 0 0.125em #fff7;
+  transition: box-shadow var(--transDur) var(--buttonTiming);
+  -webkit-tap-highlight-color: #0000;
 }
-.button:hover {
-  background-color: rgb(30, 43, 46);
-  color: white;
+
+.calc__btn:active span, .calc__btn.calc__btn--active span {
+  transform: scale(0.95);
 }
-.btn-0 {
-  grid-column: 1/3;
+
+.calc__btn:focus {
+  color: #86a6f9;
+  text-shadow: 0 0 0.25em #86a6f977;
+}
+
+.calc__btn small, .calc__btn span {
+  pointer-events: none;
+}
+
+.calc__btn span {
+  display: block;
+  transition: transform var(--transDur) var(--buttonTiming);
+}
+
+.calc__btn.calc__btn--primary {
+  background-color: #255ff4;
+}
+
+
+.calc__btn--tall {
+  grid-column: 4 / 5;
+  grid-row: 5 / 7;
+}
+
+.calc__error, .calc__memory, .calc__screen {
+  color: #17181c;
+}
+
+.calc__error, .calc__memory {
+  font-weight: bold;
+  position: absolute;
+  left: 1.5em;
+  text-shadow: 0.1em 0.1em 0.1em #0004;
+}
+
+.calc__error {
+  top: 10px;
+}
+
+.calc__memory {
+  top: 3.4em;
+}
+
+.calc__j {
+  color: var(--logoBlue);
+  text-shadow: 0 0 0.25em #255ff444;
+}
+
+.calc__logo {
+  font-size: 2em;
+  text-align: center;
+  text-shadow: 0 0 0.25em #0004;
+  height: 3rem;
+}
+
+
+.calc__screen {
+  background-image: linear-gradient(180deg, #9aa38f, #8d9781);
+  border-top: 0.25rem solid #abafba;
+  border-right: 0.25rem solid #abafba;
+  border-bottom: 0.25rem solid #fff;
+  border-left: 0.25rem solid #c7cad1;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.25rem 0.25rem #0007 inset;
+  display: flex;
+  flex-wrap: wrap;
+
+  font: 40px monospace;
+  margin: 0 auto 1rem auto;
+  padding: 5px;
+  text-align: right;
+  text-shadow: 0.1rem 0.1rem 0.1rem #0004;
+  text-transform: uppercase;
+  width: 100%;
+  height: 150px;
+
+}
+
+.calc__screen--fade-in {
+  animation: valueBlink 0.05s linear;
+}
+
+@keyframes valueBlink {
+  from {
+    color: #17181c00;
+    text-shadow: 0.1rem 0.1rem 0.1rem #0000;
+  }
+  to {
+    color: #17181c;
+    text-shadow: 0.1rem 0.1rem 0.1rem #0004;
+  }
 }
