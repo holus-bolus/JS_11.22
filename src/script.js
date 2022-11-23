@@ -12,12 +12,17 @@ function app() {
     lastOperand = 0,
     signs = /[\/\*\-\+]/,
     debug = false,
-    action = (e) => {
-      let tar = e.target || e,
-        functionOperation = fnByKey(e.keyCode, e.shiftKey, e.altKey, e.metaKey),
+    action = (event) => {
+      let tar = event.target || event,
+        functionOperation = fnByKey(
+          event.keyCode,
+          event.shiftKey,
+          event.altKey,
+          event.metaKey
+        ),
         output = calc.output;
-      if (e.keyCode === 13) e.preventDefault();
-      else if (!functionOperation && !e.keyCode)
+      if (event.keyCode === 13) e.preventDefault();
+      else if (!functionOperation && !event.keyCode)
         functionOperation = tar.getAttribute('data-fn');
       if (functionOperation && output) {
         let maxLen = +output.maxLength,
@@ -311,9 +316,14 @@ function app() {
       }
       return functionStorage;
     },
-    kbdButtonPress = (e, state = 'down') => {
-      let tar = e.target || e,
-        functionOfKey = fnByKey(e.keyCode, e.shiftKey, e.altKey, e.metaKey),
+    kbdButtonPress = (event, state = 'down') => {
+      let tar = event.target || event,
+        functionOfKey = fnByKey(
+          event.keyCode,
+          event.shiftKey,
+          event.altKey,
+          event.metaKey
+        ),
         key = calc.querySelector(`[data-fn="${functionOfKey}"]`);
 
       if (key) {
@@ -326,9 +336,9 @@ function app() {
           keyCL.remove(activeClass);
       }
     },
-    nearestLastDecPt = (n, places = 9) => {
+    nearestLastDecPt = (near, places = 9) => {
       let power = 10 ** -places,
-        res = Math.round(n / power) * power;
+        res = Math.round(near / power) * power;
       return String(+res.toFixed(places));
     },
     solve = (firstnumber, operator, secondnumber) => {
@@ -359,5 +369,5 @@ function app() {
   calc.addEventListener('click', action);
   document.addEventListener('keydown', action);
   document.addEventListener('keydown', kbdButtonPress);
-  document.addEventListener('keyup', (e) => kbdButtonPress(e, 'up'));
+  document.addEventListener('keyup', (event) => kbdButtonPress(event, 'up'));
 }
