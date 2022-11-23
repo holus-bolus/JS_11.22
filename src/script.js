@@ -4,9 +4,9 @@ function app() {
   let calc = document.forms[0],
     isCalcing = false,
     error = '',
-    val = 0,
+    value = 0,
     memory = 0,
-    op = '',
+    operator = '',
     exp = [],
     lastPart = '',
     lastOperand = 0,
@@ -14,31 +14,32 @@ function app() {
     debug = false,
     action = (e) => {
       let tar = e.target || e,
-        fn = fnByKey(e.keyCode, e.shiftKey, e.altKey, e.metaKey),
+        functionOperation = fnByKey(e.keyCode, e.shiftKey, e.altKey, e.metaKey),
         output = calc.output;
       if (e.keyCode === 13) e.preventDefault();
-      else if (!fn && !e.keyCode) fn = tar.getAttribute('data-fn');
-      if (fn && output) {
+      else if (!functionOperation && !e.keyCode)
+        functionOperation = tar.getAttribute('data-fn');
+      if (functionOperation && output) {
         let maxLen = +output.maxLength,
           maxVal = 10 ** maxLen,
-          fnIsNum = !isNaN(fn),
-          fnIsDec = fn === '.',
-          fnIsPct = fn === '%',
-          fnIsSqrt = fn === 'sqrt',
-          fnIsSign = fn === '+-',
-          recallOrClearM = fn === 'mrc',
-          subFromM = fn === 'm-',
-          addToM = fn === 'm+',
-          fnIsOp = '/*-+'.indexOf(fn) > -1,
-          fnIsEquals = fn === '=',
-          fnIsClear = fn === 'C';
+          fnIsNum = !isNaN(functionOperation),
+          fnIsDec = functionOperation === '.',
+          fnIsPct = functionOperation === '%',
+          fnIsSqrt = functionOperation === 'sqrt',
+          fnIsSign = functionOperation === '+-',
+          recallOrClearM = functionOperation === 'mrc',
+          subFromM = functionOperation === 'm-',
+          addToM = functionOperation === 'm+',
+          fnIsOp = '/*-+'.indexOf(functionOperation) > -1,
+          fnIsEquals = functionOperation === '=',
+          fnIsClear = functionOperation === 'C';
         if (!error) {
           if (exp.length) lastPart = exp[exp.length - 1];
           if (fnIsNum || fnIsDec || fnIsPct || fnIsSqrt || fnIsSign || fnIsOp) {
             if (!isCalcing) {
               isCalcing = true;
               if (fnIsNum || fnIsDec) {
-                op = '';
+                operator = '';
                 exp = ['0'];
                 lastPart = exp[0];
                 lastOperand = 0;
@@ -48,9 +49,9 @@ function app() {
           }
           if (fnIsNum) {
             if (isNaN(lastPart)) {
-              exp.push(fn);
+              exp.push(functionOperation);
             } else if (lastPart.length < maxLen) {
-              let numToAdd = lastPart + fn;
+              let numToAdd = lastPart + functionOperation;
               if (numToAdd[0] === '0' && numToAdd[1] !== '.')
                 numToAdd = numToAdd.substr(1);
               exp[exp.length - 1] = numToAdd;
@@ -58,12 +59,13 @@ function app() {
           } else if (fnIsDec) {
             if (lastPart.indexOf('.') === -1) {
               if (isNaN(lastPart)) exp.push('0.');
-              else if (lastPart.length < maxLen - 1) exp[exp.length - 1] += fn;
+              else if (lastPart.length < maxLen - 1)
+                exp[exp.length - 1] += functionOperation;
             }
           } else if (fnIsPct) {
             if (exp.length) {
               if (!isNaN(lastPart)) {
-                if (op && exp.indexOf(op) > -1) {
+                if (operator && exp.indexOf(operator) > -1) {
                   exp[exp.length - 1] = nearestLastDecPt(
                     (exp[0] * exp[exp.length - 1]) / 100
                   );
@@ -93,7 +95,7 @@ function app() {
               else exp[0] = String(-exp[0]);
             }
           } else if (recallOrClearM) {
-            if (memory !== 0 && memory === val) {
+            if (memory !== 0 && memory === value) {
               if (exp.length <= 1) {
                 isCalcing = false;
                 memory = 0;
@@ -108,34 +110,35 @@ function app() {
               displayM(memory !== 0);
             }
           } else if (fnIsOp) {
-            op = fn;
+            operator = functionOperation;
             if (isNaN(lastPart)) {
-              exp[exp.length - 1] = op;
+              exp[exp.length - 1] = operator;
             } else {
               let curExp = exp.join(' ');
               if (signs.test(curExp)) {
                 exp = [`${solve(exp[0], exp[1], exp[2])}`];
                 exp[0] = nearestLastDecPt(exp[0]);
                 lastPart = exp[0];
-                val = lastPart;
+                value = lastPart;
               }
-              exp.push(op);
+              exp.push(operator);
             }
             blink();
           } else {
             let memAction = subFromM || addToM;
             if (fnIsEquals || memAction) {
               isCalcing = false;
-              if (op && exp.indexOf(op) > -1) lastOperand = lastPart;
-              let compoundEquals = lastOperand && exp.indexOf(op) === -1,
+              if (operator && exp.indexOf(operator) > -1)
+                lastOperand = lastPart;
+              let compoundEquals = lastOperand && exp.indexOf(operator) === -1,
                 normalEquals = !isNaN(lastOperand);
               if (compoundEquals) {
-                if (!memAction) exp = [`${solve(val, op, lastOperand)}`];
+                if (!memAction) exp = [`${solve(value, op, lastOperand)}`];
               } else if (normalEquals) {
-                exp = [`${solve(exp[0], op, lastOperand)}`];
+                exp = [`${solve(exp[0], operator, lastOperand)}`];
               } else {
                 lastOperand = exp[0];
-                exp = [`${solve(val, op, val)}`];
+                exp = [`${solve(value, operator, value)}`];
               }
               exp[0] = nearestLastDecPt(exp[0]);
               if (memAction) {
@@ -148,23 +151,26 @@ function app() {
               blink();
             }
           }
-          if (fn !== 'C') {
+          if (functionOperation !== 'C') {
             lastPart = exp[exp.length - 1];
-            if (!isNaN(lastPart) || lastPart === 'NaN') val = lastPart;
-            if (Math.abs(val) === Infinity || val === 'NaN') {
+            if (!isNaN(lastPart) || lastPart === 'NaN') value = lastPart;
+            if (Math.abs(value) === Infinity || value === 'NaN') {
               error = '0';
-            } else if (val <= -maxVal / 10) {
+            } else if (value <= -maxVal / 10) {
               let cutNeg = maxLen - 3;
               if (cutNeg < 0) cutNeg = 0;
-              error = (val / maxVal).toFixed(cutNeg);
-            } else if (val >= maxVal) {
+              error = (value / maxVal).toFixed(cutNeg);
+            } else if (value >= maxVal) {
               let cutPos = maxLen - 2;
               if (cutPos < 0) cutPos = 0;
-              error = (val / maxVal).toFixed(cutPos);
+              error = (value / maxVal).toFixed(cutPos);
             }
-            let outputVal = error || String(val);
+            let outputVal = error || String(value);
             if (!error) {
-              if ((val >= -1e8 && val < -1e7) || (val >= 1e8 && val < 1e9))
+              if (
+                (value >= -1e8 && value < -1e7) ||
+                (value >= 1e8 && value < 1e9)
+              )
                 outputVal = outputVal.substr(0, maxLen - 1);
               else outputVal = outputVal.substr(0, maxLen);
             } else {
@@ -177,16 +183,16 @@ function app() {
           if (debug) console.clear();
           isCalcing = false;
           error = '';
-          val = 0;
+          value = 0;
           if (Math.abs(memory) === Infinity || isNaN(memory)) {
             memory = 0;
             displayM(false);
           }
-          op = '';
+          operator = '';
           exp = [];
           lastPart = '';
           lastOperand = 0;
-          output.value = val;
+          output.value = value;
           blink();
           displayE(false);
         }
@@ -215,100 +221,100 @@ function app() {
       cm.textContent = show ? 'M' : '';
     },
     fnByKey = (keycode, isShift, isAlt, isCmd) => {
-      let fn = '';
+      let functionStorage = '';
       switch (keycode) {
         case 12:
         case 27:
         case 67:
-          if (!isCmd) fn = 'C';
+          if (!isCmd) functionStorage = 'C';
           break;
         case 13:
-          fn = '=';
+          functionStorage = '=';
           break;
         case 48:
         case 96:
-          fn = '0';
+          functionStorage = '0';
           break;
         case 49:
         case 97:
-          fn = '1';
+          functionStorage = '1';
           break;
         case 50:
         case 98:
-          fn = '2';
+          functionStorage = '2';
           break;
         case 51:
         case 99:
-          fn = '3';
+          functionStorage = '3';
           break;
         case 52:
         case 100:
-          fn = '4';
+          functionStorage = '4';
           break;
         case 53:
         case 101:
-          fn = isShift ? '%' : '5';
+          functionStorage = isShift ? '%' : '5';
           break;
         case 54:
         case 102:
-          fn = '6';
+          functionStorage = '6';
           break;
         case 55:
         case 103:
-          fn = '7';
+          functionStorage = '7';
           break;
         case 56:
-          fn = isShift ? '*' : '8';
+          functionStorage = isShift ? '*' : '8';
           break;
         case 104:
-          fn = '8';
+          functionStorage = '8';
           break;
         case 57:
         case 105:
-          fn = '9';
+          functionStorage = '9';
           break;
         case 77:
-          fn = 'mrc';
+          functionStorage = 'mrc';
           break;
         case 83:
-          fn = 'sqrt';
+          functionStorage = 'sqrt';
           break;
         case 106:
-          fn = '*';
+          functionStorage = '*';
           break;
         case 107:
-          fn = '+';
+          functionStorage = '+';
           break;
         case 187:
-          fn = isShift ? '+' : '=';
+          functionStorage = isShift ? '+' : '=';
           break;
         case 188:
-          fn = isShift ? 'm-' : '';
+          functionStorage = isShift ? 'm-' : '';
           break;
         case 109:
         case 189:
-          fn = isAlt ? '+-' : '-';
+          functionStorage = isAlt ? '+-' : '-';
           break;
         case 110:
-          fn = '.';
+          functionStorage = '.';
           break;
         case 190:
-          fn = isShift ? 'm+' : '.';
+          functionStorage = isShift ? 'm+' : '.';
           break;
         case 111:
         case 191:
-          fn = '/';
+          functionStorage = '/';
           break;
         default:
-          fn = '';
+          functionStorage = '';
           break;
       }
-      return fn;
+      return functionStorage;
     },
     kbdButtonPress = (e, state = 'down') => {
       let tar = e.target || e,
-        fn = fnByKey(e.keyCode, e.shiftKey, e.altKey, e.metaKey),
-        key = calc.querySelector(`[data-fn="${fn}"]`);
+        functionOfKey = fnByKey(e.keyCode, e.shiftKey, e.altKey, e.metaKey),
+        key = calc.querySelector(`[data-fn="${functionOfKey}"]`);
 
       if (key) {
         let activeClass = 'calc__btn--active',
@@ -322,32 +328,32 @@ function app() {
     },
     nearestLastDecPt = (n, places = 9) => {
       let power = 10 ** -places,
-        r = Math.round(n / power) * power;
-      return String(+r.toFixed(places));
+        res = Math.round(n / power) * power;
+      return String(+res.toFixed(places));
     },
-    solve = (A, op, B) => {
-      let r = 0,
-        a = !isNaN(A) ? +A : r,
-        b = !isNaN(B) ? +B : a;
+    solve = (firstnumber, operator, secondnumber) => {
+      let calculationsResult = 0,
+        firstNumber = !isNaN(firstnumber) ? +firstnumber : calculationsResult,
+        secondNumber = !isNaN(secondnumber) ? +secondnumber : firstNumber;
 
-      switch (op) {
+      switch (operator) {
         case '/':
-          r = a / b;
+          calculationsResult = firstNumber / secondNumber;
           break;
         case '*':
-          r = a * b;
+          calculationsResult = firstNumber * secondNumber;
           break;
         case '-':
-          r = a - b;
+          calculationsResult = firstNumber - secondNumber;
           break;
         case '+':
-          r = a + b;
+          calculationsResult = firstNumber + secondNumber;
           break;
         default:
-          r = a;
+          calculationsResult = firstNumber;
           break;
       }
-      return r;
+      return calculationsResult.toFixed(8);
     };
 
   calc.addEventListener('click', action);

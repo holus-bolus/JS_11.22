@@ -97,6 +97,11 @@ body {
   background-color: #255ff4;
 }
 
+.input{
+  display: flex;
+  flex-wrap: wrap;
+}
+
 
 .calc__btn--tall {
   grid-column: 4 / 5;
