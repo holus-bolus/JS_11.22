@@ -10,6 +10,7 @@ function makeDeepCopy(object) {
   }
   if (Array.isArray(object)) {
     return object.map((item) => {
+      /*Оператор instanceof позволяет проверить, принадлежит ли объект указанному классу, с учётом наследования.*/
       if (item instanceof Object) return makeDeepCopy(item);
       return item;
     });
